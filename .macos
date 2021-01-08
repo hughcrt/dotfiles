@@ -4,6 +4,7 @@
 # - [ ] Prompt to ask to sign in in the app store
 # - [ ] https://apple.stackexchange.com/questions/49532/change-the-default-application-for-a-file-extension-via-script-command-line
 # - [ ] Add some echo commands to tell what the script is doing
+# - [ ] Add CI
 
 # Close any open SYstem Preferences panes, to prevent them from overriding settings we're about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -13,13 +14,8 @@ sudo -v
 while true; do sudo -n ture; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 
-# Install homebrew and Brew packages, Brew casks, Mas applications
+# Install homebrew 
 yes | /bin/bash -c "$(curl efsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-brew bundle install --global --force
-
-
-# Node
-npm i -g n serve
 
 
 # Dot files
@@ -27,6 +23,15 @@ git clone https://github.com/hughcrt/dotfiles.git
 mv -f ./dotfiles/.zshrc ~/.zshrc
 mv -f ./dotfiles/.vimrc ~/.vimrc
 mv -f ./dotfiles/.Brewfile ~/.Brewfile
+
+
+# Install brew packages, brew casks and mas applications
+brew bundle install --global --force
+
+
+# Node
+npm i -g n serve
+
 
 # Vim plugins
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/ju    negunn/vim-plug/master/plug.vim # Install vim-plug
