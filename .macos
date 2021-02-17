@@ -1,10 +1,17 @@
 #!/bin/zsh 
 
 # https://github.com/kentcdodds/dotfiles/blob/master/.macos
+# https://github.com/nnja/new-computer
+# https://github.com/ruyadorno/installme-osx
+# https://github.com/ryanmcdermott/clean-code-javascript
+# https://github.com/kevinSuttle/macOS-Defaults
 # - [ ] Prompt to ask to sign in in the app store
 # - [ ] https://apple.stackexchange.com/questions/49532/change-the-default-application-for-a-file-extension-via-script-command-line
 # - [ ] Add some echo commands to tell what the script is doing
 # - [ ] Add CI
+# - [ ] Clone notes repo
+# - [ ] crontab commit and push notes to github
+# - [ ] replace rm by move to bin
 
 # Close any open SYstem Preferences panes, to prevent them from overriding settings we're about to change
 osascript -e 'tell application "System Preferences" to quit'
@@ -37,6 +44,9 @@ npm i -g n serve
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/ju    negunn/vim-plug/master/plug.vim # Install vim-plug
 vim -E -s -u "$HOME/.vimrc" +PlugInstall +qall # Install plugins
 
+# Install XVim2
+# - [ ] Sign XCode with my own certificate
+# - [ ] git clone https://github.com/XVimProject/XVim2.git; git checkout develop; make 
 
 # Dock
 dockutil --remove all
@@ -49,9 +59,81 @@ killall Dock;
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
+
 # Wipr
-echo "Please configure Wipr"
 open -a Wipr
 
+# Disable font smoothing 
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
 
 
+
+#!/bin/sh
+
+# - [ ] Dump scripts
+# - [ ] Column view in finder
+# - [ ] Arrange by kind in Finder
+# - [ ] iCloud preferences: https://apple.stackexchange.com/questions/297712/toggle-icloud-services-in-system-preferences-via-command-line-bash
+# - [ ] Open yoink at login
+
+# Homewbrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+brew install $(cat brew)
+brew cask install $(cat brew-cask)
+mas install $(cat mas | awk '{print $1}')
+
+# View changes that has been made in the settings
+defaults -currentHost read -g
+
+# Remap caps-lock to escape
+defaults -currentHost write -g com.apple.keyboard.modifiermapping.1452-627-0 -add-array '<dict><key>HIDKeyboardModifierMappingDst</key><integer>30064771113</integer><key>HIDKeyboardModifierMappingSrc</key><integer>30064771129</integer></dict>'
+
+# Change default view in Finder
+# - [ ] Not working
+defaults write com.apple.Finder FXPreferredViewStyle clmv
+
+# Dock
+defaults read com.apple.Dock orientation 'left' 
+defaults write com.apple.dock static-only -bool true; killall Dock
+# - [ ] autohide Dock
+#- [ ] Don't Show recent application in Dock
+
+# Finder
+# - [ ] Show path bar
+# - [ ] Order Favorites
+# - [ ] Default view as columns
+# - [ ] Default sort by kind
+# - [ ] Show filename extensions
+# - [ ] Open Documents when openning new Finder windows
+
+# Keyboard
+# - [ ] key repeat
+
+# Safari 
+# - [ ] Show Desktop Menu in Menu bar
+# - [ ] Show full website address
+# - [ ] Press tab to highlight each item on a webpage
+# - [ ] View > Show status bar
+
+# Calendar
+#- [ ] Start week on Monday
+
+# Desktop 
+# - [ ] Use stacks
+
+defaults write -g NSAutomaticSpellingCorrectionEnabled 0
+
+# - [ ] crontab
+
+# Keyboard
+# - [ ] Use keyboard navigation to move between controls    
+
+sudo pmset repeat shutdown MTWRFSU 22:45:00;
+
+
+# Miscelaneous
+# - [ ] Unallow gest user
+# - [ ] Show date in menu bar
+# Log out
+sudo launchctl bootout user/$(id -u ${whoami})
