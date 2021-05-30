@@ -1,0 +1,23 @@
+tap "clintmod/formulas"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+brew "deno"
+brew "gh"
+brew "mas"
+brew "neovim"
+brew "node"
+brew "tldr"
+cask "font-fira-code-nerd-font"
+cask "setapp"
+cask "sketch"
+cask "transmission"
+cask "visual-studio-code"
+mas "1Password 7", id: 1333542190
+mas "Keynote", id: 409183694
+mas "Magnet", id: 441258766
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Things", id: 904280696
+mas "Xcode", id: 497799835
